@@ -10,13 +10,13 @@ namespace Api.Controllers{
     {
         [HttpGet]
         [Route("/todaslistas")]
-        public List<Tarefa> Get([FromServices] AppDbContext context){
+        public List<Tarefa> ObterTodos([FromServices] AppDbContext context){
                 return context.Tarefas.ToList();
         }
 
         [HttpGet]
         [Route("/{id:int}")]
-        public Tarefa GetId(
+        public Tarefa ObterPorId(
             int id,
             [FromServices] AppDbContext context)
         {
@@ -33,22 +33,21 @@ namespace Api.Controllers{
                 return tarefa;
         }
 
-        [HttpPut]
-        [Route("/{id:int}")]
-        public Tarefa Atualizar(
-            int id,
+        [HttpPut ("/{id:int}")]
+        public IActionResult Put(
+           [FromRoute] int id,
             [FromBody] Tarefa tarefa,
             [FromServices] AppDbContext context)
         {
                 var atualizar = context.Tarefas.FirstOrDefault(x=>x.Id == id);
                 if(atualizar == null)
-                    return tarefa;
-                tarefa.Titulo = tarefa.Titulo;
-                tarefa.Concluido = tarefa.Concluido;
+                    return NotFound();
+                atualizar.Titulo = tarefa.Titulo;
+                atualizar.Concluido = tarefa.Concluido;
 
-                context.Tarefas.Update(tarefa);
+                context.Tarefas.Update(atualizar);
                 context.SaveChanges();
-                return tarefa;
+                return Ok(atualizar);
         }
 
 
