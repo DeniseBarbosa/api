@@ -1,3 +1,5 @@
+using Api.Data;
+using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers{
@@ -8,8 +10,8 @@ namespace Api.Controllers{
     {
         [HttpGet]
         [Route("/obter")]
-        public string Get(){
-            return "Obtendo informações";
+        public List<Tarefa> Get([FromServices] AppDbContext context){
+                return context.Tarefas.ToList();
         }
     }
 
