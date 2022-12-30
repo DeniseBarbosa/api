@@ -13,6 +13,16 @@ namespace Api.Controllers{
         public List<Tarefa> Get([FromServices] AppDbContext context){
                 return context.Tarefas.ToList();
         }
+
+        [HttpPost]
+        [Route("/enviar")]
+        public Tarefa Post(
+            [FromBody] Tarefa tarefa,
+            [FromServices] AppDbContext context){
+                context.Tarefas.Add(tarefa);
+                context.SaveChanges();
+                return tarefa;
+        }
     }
 
 }
