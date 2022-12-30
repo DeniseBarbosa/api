@@ -7,8 +7,9 @@ namespace Api.Controllers{
     public class HomeController : ControllerBase
     {
         [HttpGet]
+        [Route("/obter")]
         public string Get(){
-            return "Olá mundo";
+            return "Obtendo informações";
         }
     }
 
